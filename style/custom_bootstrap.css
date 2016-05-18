@@ -1,0 +1,12 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  margin-top: 50px;
+  height: 70px;
+}
+
+.form-group .checkbox{
+    padding-top: 0px;
+}
