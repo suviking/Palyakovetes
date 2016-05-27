@@ -166,16 +166,16 @@ if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 							<label for='8' class='col-lg-2 control-label'>".$questions[8][0]."</label>
 							<div class='col-lg-10 checkbox' id='8'>
 								<label>
-									<input name='8' type='checkbox' value='Dolgozom'> Dolgozom
+									<input name='a[]' type='checkbox' value='Dolgozom'> Dolgozom
 								</label><br>
 								<label>
-									<input name='8' type='checkbox' value='A következő évi felvételire készülök'> A következő évi felvételire készülök
+									<input name='a[]' type='checkbox' value='A következő évi felvételire készülök'> A következő évi felvételire készülök
 								</label><br>
 								<label>
-									<input name='8' type='checkbox' value='Pénzt keresek'> Pénzt keresek
+									<input name='a[]' type='checkbox' value='Pénzt keresek'> Pénzt keresek
 								</label><br>
 								<label>
-									<input name='8' type='checkbox' value='Egyéb'> Egyéb
+									<input name='a[]' type='checkbox' value='Egyéb'> Egyéb
 									<textarea class='form-control' id='81' form='regForm' cols='57' rows='5' maxlength='50' name='81'></textarea>
 								</label>								
 							</div>
@@ -264,7 +264,28 @@ if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 }
 if (isset($_GET["send"]) AND res($_GET["send"]) == 1 )
 {
-	die("kacsa");
+	for ($i = 0; $i < 13; $i++)
+	{
+		if ($i == 8)
+		{
+			$answer_8 = "";
+			if (!empty($_POST["a"]))
+			{
+				foreach($_POST["a"] as $check)
+				{
+					$answer_8 .= res($check) . "; ";
+				}
+			}
+		}
+		else
+		{
+			${"answer_$i"} = res($_POST[$i]);
+		}
+	}
+	$answer_81 = res($_POST[81]);
+	$comment = res($_POST["comment"]);
+	$date = date("Y. m. d. H:i"); 
+
 } 
 
 ?>
