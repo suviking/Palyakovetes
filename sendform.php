@@ -14,8 +14,17 @@ require_once("include/head.php");
  	exit;
  }
 
-if (!isset(res($_GET["send"])) OR res($_GET["send"]) <> 1)
+if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 {
+	$result = $db->query("SELECT question FROM namedquestions ORDER BY id" );
+	$questions = array();
+	while ($question = mysqli_fetch_array($result))
+	{
+		$questions[] = $question;
+	}
+	$result->free();
+
+
 	echo "
 			<div class='navbar navbar-warning'>
 				<div class='navbar-header'>
@@ -42,242 +51,208 @@ if (!isset(res($_GET["send"])) OR res($_GET["send"]) <> 1)
 						<legend>Általános információk</legend>
 
 						<div class='form-group'>
-							<label for='title' class='col-lg-2 control-label'>Produkció címe</label>
+							<label for='0' class='col-lg-2 control-label'>".$questions[0][0]."</label>
 							<div class='col-lg-4'>
-								<input id='title' class='form-control' name='title' type='text' maxlength='25' size='30' required='required'>
+								<input id='0' class='form-control' name='0' type='text' maxlength='50' size='30' required='required'>
 							</div>
 						</div>
 
 						<div class='form-group'>
-							<label for='partNo' class='col-lg-2 control-label'>Résztvevők száma</label>
+							<label for='1' class='col-lg-2 control-label'>".$questions[1][0]."</label>
 							<div class='col-lg-4'>
-								<input id='partNo' class='form-control' name='partNo' type='number' min='1' max='700' size='3' value='1'>
+								<input id='1' class='form-control' name='1' type='text' maxlength='50' size='50' required='required'>
 							</div>
 						</div>
 
 						<div class='form-group'>
-							<label for='category' class='col-lg-2 control-label'>Kategória</label>
+							<label for='2' class='col-lg-2 control-label'>".$questions[2][0]."</label>
 							<div class='col-lg-4'>
-								<select class='form-control' id='category' name='category' require='require'>
-									<optgroup label='Ének-zene'>
-										<optgroup label='&nbsp;- Könnyűzene'>
-											<option name='EZ_K_egy'>Könnyűzene - Egyéni vagy duó</option>
-											<option name='EZ_K_csop'>Könnyűzene - Csoportos</option>
-											<option name='EZ_K_zk'>Könnyűzene - Zenekar</option>
-											<option name='EZ_K_oszt'>Osztályének</option>
-										</optgroup>
-										<optgroup label='&nbsp;- Komolyzene'>
-											<option name='EZ_kom_egy'>Komolyzene - Egyéni vagy duó</option>
-											<option name='EZ_kom_csop'>Komolyzene - Csoportos</option>
-										</optgroup>
-									</optgroup>
-									<optgroup label='Vers és próza'>
-											<option name='VP_V'>Vers</option>
-											<option name='VP_P'>Próza</option>
-									</optgroup>
-									<optgroup label='Egyéb'>
-											<option name='E_vid'>Egyéb - Videó</option>
-											<option name='E_jel'>Egyéb - Jelenet</option>
-											<option name='E_egyeb'>Egyéb</option>
-										<optgroup label='&nbsp;- Tánc'>
-											<option name='E_T_egy'>Tánc - Egyéni vagy párban</option>
-											<option name='E_T_csop'>Tánc - Csoportos</option>
-											<option name='E_T_oszt'>Osztálytánc</option>
-										</optgroup>
-									</optgroup>
+								<input id='2' class='form-control' name='2' type='number' max='2100' min='2016' size='4' required='required'>
+							</div>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<legend>Továbbtanulás</legend>
+
+						<div class='form-group'>
+							<label class='col-lg-2 control-label'>".$questions[3][0]."</label>
+							<div class='col-lg-4'>
+								<div class='radio radio-primary'>
+									<label>
+										<input name='3' type='radio' value='1' checked>Igen
+									</label>
+								</div>
+								<div class='radio radio-primary'>
+									<label>
+										<input name='3' type='radio' value='0'>Nem
+									</label>
+								</div>
+							</div>
+						</div>
+
+						<div class='form-group'>
+							<label for='4' class='col-lg-2 control-label'>".$questions[4][0]."</label>
+							<div class='col-lg-4'>
+								<select class='form-control' id='4' name='4' require='require'>
+									<option name='4'>Agrár</option>
+									<option name='4'>Bölcsészettudomány</option>
+									<option name='4'>Gazdaságtudomány</option>
+									<option name='4'>Informatika</option>
+									<option name='4'>Jogi</option>
+									<option name='4'>Műszaki</option>
+									<option name='4'>Művészet</option>
+									<option name='4'>Művészetközvetítés</option>
+									<option name='4'>Közigazgatási, rendészeti, katonai</option>
+									<option name='4'>Orvos- és egészségtudomány</option>
+									<option name='4'>Sporttudomány</option>
+									<option name='4'>Társadalomtudomány</option>
+									<option name='4'>Természettudomány</option>
+									<option name='4'>Nem jelentkeztem</option>
 								</select>
 							</div>
 						</div>
 
 						<div class='form-group'>
-							<label for='duration' class='col-lg-2 control-label'>Produkció hossza</label>
-							<div class='col-lg-4 input-group'>
-								<input id='duration' class='form-control' name='duration' type='number' min='1' max='15' size='3' value='2'>
-								<span class='input-group-addon'>perc &nbsp;(Inkább felfele kerekíts!)</span>
-							</div>
-						</div>
-
-						<div class='form-group'>
-							<label class='col-lg-2 control-label'>Helyszín</label>
+							<label class='col-lg-2 control-label'>".$questions[5][0]."</label>
 							<div class='col-lg-4'>
 								<div class='radio radio-primary'>
 									<label>
-										<input name='location' type='radio' value='szinpad' checked>Színpad
+										<input name='5' type='radio' value='Budapesten' checked>Budapesten
 									</label>
 								</div>
 								<div class='radio radio-primary'>
 									<label>
-										<input name='location' type='radio' value='aula'>Aula
+										<input name='5' type='radio' value='Vidéken'>Vidéken
+									</label>
+								</div>
+								<div class='radio radio-primary'>
+									<label>
+										<input name='5' type='radio' value='Külföldön'>Külföldön
 									</label>
 								</div>
 							</div>
 						</div>
-					</fieldset>
-
-					<fieldset>
-						<legend>Technikai igények</legend>
 
 						<div class='form-group'>
-							<label for='wiredMic' class='col-lg-2 control-label'>Vezetékes mikrofon</label>
+							<label class='col-lg-2 control-label'>".$questions[6][0]."</label>
 							<div class='col-lg-4'>
-								<input id='wiredMic' class='form-control' name='wiredMic' type='number' min='0' max='2' value='0'>
-							</div>
-							<label for='wiredMicStand' class='col-lg-2 control-label'>Ebből állványos</label>
-							<div class='col-lg-4'>
-								<input id='wiredMicStand' class='form-control' name='wiredMicStand' type='number' min='0' max='2' value='0'>
+								<div class='radio radio-primary'>
+									<label>
+										<input name='6' type='radio' value='Egyetemi képzés' checked>Egyetemi képzés
+									</label>
+								</div>
+								<div class='radio radio-primary'>
+									<label>
+										<input name='6' type='radio' value='Főiskolai képzés'>Főiskolai képzés
+									</label>
+								</div>
+								<div class='radio radio-primary'>
+									<label>
+										<input name='6' type='radio' value='Felsőfokú szakképzés (OKJ)'>Felsőfokú szakképzés (OKJ)
+									</label>
+								</div>
 							</div>
 						</div>
 
 						<div class='form-group'>
-							<label for='wirelessMic' class='col-lg-2 control-label'>Vezetéknélküli mikrofon</label>
+							<label for='7' class='col-lg-2 control-label'>".$questions[7][0]."</label>
 							<div class='col-lg-4'>
-								<input id='wirelessMic' class='form-control' name='wirelessMic' type='number' min='0' max='3' value='0'>
-							</div>
-							<label for='wirelessMicStand' class='col-lg-2 control-label'>Ebből állványos</label>
-							<div class='col-lg-4'>
-								<input id='wirelessMicStand' class='form-control' name='wirelessMicStand' type='number' min='0' max='3' value='0'>
+								<textarea class='form-control' id='7' form='regForm' cols='30' rows='5' maxlength='500' name='7'></textarea>
 							</div>
 						</div>
 
 						<div class='form-group'>
-							<label for='microport' class='col-lg-2 control-label'>Mikroport</label>
-							<div class='col-lg-4'>
-								<input id='microport' class='form-control' name='microport' type='number' min='0' max='2' value='0'>
-							</div>
-						</div>
-
-
-						<div class='form-group'>
-							<label for='fieldMic' class='col-lg-2 control-label'>Térmikrofon (állvánnyal)</label>
-							<div class='col-lg-4'>
-								<input id='fieldMic' class='form-control' name='fieldMic' type='number' min='0' max='4' value='0'>
-							</div>
-						</div>
-
-						<div class='form-group'>
-							<label for='instMic' class='col-lg-2 control-label'>Hangszermikrofon (állvánnyal)</label>
-							<div class='col-lg-4'>
-								<input id='instMic' class='form-control' name='instMic' type='number' min='0' max='2' value='0'>
-							</div>
-						</div>
-
-						<div class='form-group'>
-							<label for='jack63' class='col-lg-2 control-label'>Jack 6.3mm</label>
-							<div class='col-lg-4'>
-								<input id='jack63' class='form-control' name='jack63' type='number' min='0' max='2' value='0'>
-							</div>
-						</div>
-
-						<div class='form-group'>
-							<label for='jack35' class='col-lg-2 control-label'>Jack 3.5mm</label>
-							<div class='col-lg-4'>
-								<input id='jack35' class='form-control' name='jack35' type='number' min='0' max='2' value='0'>
-							</div>
-						</div>
-
-						<div class='form-group'>
-							<label for='guitarAmp' class='col-lg-2 control-label'>Ha hozol gitárerősítőt</label>
-							<div class='col-lg-4'>
-								<input id='guitarAmp' class='form-control' name='guitarAmp' type='number' min='0' max='5' value='0'>
-							</div>
-						</div>
-
-						<div class='form-group'>
-							<label for='piano' class='col-lg-2 control-label'>Zongora</label>
-							<div class='col-lg-4'>
-								<input id='piano' class='form-control' name='piano' type='number' min='0' max='1' value='0'>
-							</div>
-						</div>
-
-						<div class='form-group'>
-							<label for='musicStand' class='col-lg-2 control-label'>Kottatartó (nekünk csak egy van)</label>
-							<div class='col-lg-4'>
-								<input id='musicStand' class='form-control' name='musicStand' type='number' min='0' max='1' value='0'>
-							</div>
-						</div>
-
-						<div class='form-group'>
-							<label for='chair' class='col-lg-2 control-label'>Székek</label>
-							<div class='col-lg-4'>
-								<input id='chair' class='form-control' name='chair' type='number' min='0' max='9' value='0'>
-							</div>
-						</div>
-
-						<div class='form-group'>
-							<label for='ifMusicFile' class='col-lg-2 control-label'>Lejátszandó zenefájl</label>
-							<div class='col-lg-1 checkbox' id='ifMusicFile'>
+							<label for='8' class='col-lg-2 control-label'>".$questions[8][0]."</label>
+							<div class='col-lg-10 checkbox' id='8'>
 								<label>
-									<input name='ifMusicFile' type='checkbox' value='yes'>
-									 Van
-								</label>
-							</div>
-							<label for='musicFile' class='col-lg-2 control-label'>Fájl(ok) neve</label>
-							<div class='col-lg-4'>
-								<input id='musicFile' class='form-control' name='musicFile' type='text' size='30'>
-							</div>
-						</div>
-
-						<div class='form-group'>
-							<label for='ifProjector' class='col-lg-2 control-label'>Projektor</label>
-							<div class='col-lg-1 checkbox' id='ifProjector'>
+									<input name='8' type='checkbox' value='Dolgozom'> Dolgozom
+								</label><br>
 								<label>
-									<input name='ifProjector' type='checkbox' value='yes'>
-									 Kell
-								</label>
-							</div>
-							<label for='projectorFile' class='col-lg-2 control-label'>Kivetítendő fájl(ok) neve</label>
-							<div class='col-lg-4'>
-								<input id='projectorFile' class='form-control' name='projectorFile' type='text' size='30'>
-							</div>
-						</div>
-
-						<div class='form-group'>
-							<label for='lightRequest' class='col-lg-2 control-label'>Külön fénytechinkai igény</label>
-							<div class='col-lg-10 checkbox' id='lightRequest'>
+									<input name='8' type='checkbox' value='A következő évi felvételire készülök'> A következő évi felvételire készülök
+								</label><br>
 								<label>
-									<input name='ifExtraLight' type='checkbox' value='yes'>
-									 Van - Az egyéb kéréshez is írhatod, vagy meg is kereshetsz vele minket!
-								</label>
-							</div>
-						</div>
-					</fieldset>
-
-					<fieldset>
-						<legend>Egyéb</legend>
-
-						<div class='form-group'>
-							<label for='email' class='col-lg-2 control-label'>E-mail cím, amin elérünk</label>
-							<div class='col-lg-4'>
-								<input id='email' class='form-control' name='email' type='email' size='30' required='required'>
-							</div>
-						</div>
-
-						<br>
-
-						<div class='form-group'>
-							<label for='userSearch' class='col-lg-2 control-label'>Résztvevők hozzáadása (Osztályprodukciónál nem kell kitölteni!)</label>
-							<div class='col-lg-6'>
-								<textarea class='form-control' form='regForm' name='particUsers' rows='5' maxlength='10000' id='addedUserField' onKeyUp='showUser(this.value)'></textarea>
-							</div>
-							<div class='col-lg-4'>
-								<div id='hintField' style='visibility:hidden' class='well'></div>
+									<input name='8' type='checkbox' value='Pénzt keresek'> Pénzt keresek
+								</label><br>
+								<label>
+									<input name='8' type='checkbox' value='Egyéb'> Egyéb
+									<textarea class='form-control' id='81' form='regForm' cols='57' rows='5' maxlength='50' name='81'></textarea>
+								</label>								
 							</div>
 						</div>
 
 						<div class='form-group'>
-							<label for='comment' class='col-lg-2 control-label'>Egyéb kérés</label>
+							<label class='col-lg-2 control-label'>".$questions[9][0]."</label>
 							<div class='col-lg-4'>
-								<textarea class='form-control' id='comment' form='regForm' cols='30' rows='5' maxlength='500' name='comment'></textarea>
+								<div class='radio radio-primary'>
+									<label>
+										<input name='9' type='radio' value='Budapesten' checked>Budapesten
+									</label>
+								</div>
+								<div class='radio radio-primary'>
+									<label>
+										<input name='9' type='radio' value='Vidéken'>Vidéken
+									</label>
+								</div>
+								<div class='radio radio-primary'>
+									<label>
+										<input name='9' type='radio' value='Külföldön'>Külföldön
+									</label>
+								</div>
 							</div>
 						</div>
 
-						<!--<div class='form-group'>
-							<label for='' class='col-lg-2 control-label'></label>
+						<div class='form-group'>
+							<label class='col-lg-2 control-label'>".$questions[10][0]."</label>
 							<div class='col-lg-4'>
-								<input id='' class='form-control' >
+								<div class='radio radio-primary'>
+									<label>
+										<input name='10' type='radio' value='1' checked>Igen
+									</label>
+								</div>
+								<div class='radio radio-primary'>
+									<label>
+										<input name='10' type='radio' value='0'>Nem
+									</label>
+								</div>
 							</div>
-						</div>-->
+						</div>
 
+						<div class='form-group'>
+							<label class='col-lg-2 control-label'>".$questions[11][0]."</label>
+							<div class='col-lg-4'>
+								<div class='radio radio-primary'>
+									<label>
+										<input name='11' type='radio' value='Fél év' checked>Fél év
+									</label>
+								</div>
+								<div class='radio radio-primary'>
+									<label>
+										<input name='11' type='radio' value='Egy év'>Egy év
+									</label>
+								</div>
+								<div class='radio radio-primary'>
+									<label>
+										<input name='11' type='radio' value='Több, mint egy év'>Több, mint egy év
+									</label>
+								</div>
+							</div>
+						</div>
+
+						<div class='form-group'>
+							<label for='12' class='col-lg-2 control-label'>".$questions[12][0]."</label>
+							<div class='col-lg-4'>
+								<textarea class='form-control' id='12' form='regForm' cols='30' rows='5' maxlength='50' name='12'></textarea>
+							</div>
+						</div>
+
+						<div class='form-group'>
+							<label for='13' class='col-lg-2 control-label'>Megjegyzés</label>
+							<div class='col-lg-4'>
+								<textarea class='form-control' id='13' form='regForm' cols='30' rows='5' maxlength='50' name='comment'></textarea>
+							</div>
+						</div>
+				
 						<div class='form-group col-lg-10 col-lg-offset-2'>
 							 <button type='submit' class='btn btn-primary'>Elküldés</button>
 						</div>
@@ -287,9 +262,9 @@ if (!isset(res($_GET["send"])) OR res($_GET["send"]) <> 1)
 			</div>
 	";
 }
-if (isset(res($_GET("send"))) AND res($_GET["send"]) == 1 )
+if (isset($_GET["send"]) AND res($_GET["send"]) == 1 )
 {
-	
+	die("kacsa");
 } 
 
 ?>
