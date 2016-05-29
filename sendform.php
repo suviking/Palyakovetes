@@ -8,11 +8,11 @@ if (!include("include/cookiecheck.php"))
 
 require_once("include/head.php");
  
- if ($user["canadd"] <> 1)
- {
- 	header("Location: logout.php");
- 	exit;
- }
+if ($user["canadd"] <> 1)
+{
+	header("Location: logout.php");
+	exit;
+}
 
 if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 {
@@ -275,16 +275,73 @@ if (isset($_GET["send"]) AND res($_GET["send"]) == 1 )
 				{
 					$answer_8 .= res($check) . "; ";
 				}
+				$answer_8 = mb_substr($answer_8, 0, -2);
 			}
 		}
 		else
 		{
-			${"answer_$i"} = res($_POST[$i]);
+			if (${"answer_$i"} = (int)trim(res($_POST[$i]), " \t\n\r\0\x0B")) 
+			{}
+			else
+			{
+				${"answer_$i"} = trim(res($_POST[$i]), " \t\n\r\0\x0B");
+			}
+
+			
 		}
 	}
+
 	$answer_81 = res($_POST[81]);
-	$comment = res($_POST["comment"]);
-	$date = date("Y. m. d. H:i"); 
+	$comment = '"' . res($_POST["comment"]) . '"';
+	$date = '"' . date("Y-m-d H:i:s") . '"';
+	$answer_8 .= ": ".$answer_81;
+
+	$columns = "";
+	$values = "";
+	for ($i=0; $i < 13; $i++)
+	{ 
+		$columns .= 'Q' . ($i+1) . ', ';
+
+		if (gettype(${"answer_$i"}) == "string")
+		{
+			$values .= '"'.${"answer_$i"} . '", ';
+		}
+		else
+		{
+			$values .= ${"answer_$i"} . ", ";
+		}
+
+	}
+	$columns .= 'comment, dateofanswer';
+	$values .= "$comment, $date";
+	// die("INSERT INTO namedanswers ($columns) VALUES ($values)");
+
+	if ($db->query("INSERT INTO namedanswers ($columns) VALUES ($values)"))
+	{
+		echo"
+			<div class='alert alert-success'>
+				<h3>A választ sikeresen eltároltuk.</h3>
+			</div>
+		";
+		header("Refresh: 3; url=index.php");
+		exit;
+	}
+	else
+	{
+		die($db->error);
+		echo"
+			<div class='alert alert-danger'>
+				<h3>A válasz mentése közben váratlan hiba lépett fel, kérjük, próbálja meg később. \n 
+				Ha a probléma továbbra is fennáll, kérjük lépjen kapcsolatba az üzemeltetőkkel.</h3>
+			</div>
+		";
+		header("Refresh: 5; url=index.php");
+		exit;
+	}
+
+
+
+
 
 } 
 
