@@ -27,7 +27,7 @@ if ($user["type"] == 0) //if the user is an EGYOSZ member, only uploading the pa
 	{
 		$userfunctions .= "
 		<li>
-			<a href='viewall.php'>Válaszok megtekintése</a>
+			<a href='viewall.php?all'>Válaszok megtekintése</a>
 		</li>";
 	}
 	if ($user["canmanageusers"])

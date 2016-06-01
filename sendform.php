@@ -46,14 +46,14 @@ if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 
 			<div class='jumbotron col-lg-12'>
 
-				<form action='sendForm.php?send=1' id='regForm' class='form-horizontal' method='POST'>
+				<form action='sendform.php?send=1' id='regForm' class='form-horizontal' method='POST'>
 					<fieldset>
 						<legend>Általános információk</legend>
 
 						<div class='form-group'>
 							<label for='0' class='col-lg-2 control-label'>".$questions[0][0]."</label>
 							<div class='col-lg-4'>
-								<input id='0' class='form-control' name='0' type='text' maxlength='50' size='30' required='required'>
+								<input id='0' class='form-control' name='0' type='text' maxlength='50' size='30' required='required' autofocus>
 							</div>
 						</div>
 
@@ -80,12 +80,12 @@ if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 							<div class='col-lg-4'>
 								<div class='radio radio-primary'>
 									<label>
-										<input name='3' type='radio' value='1' checked>Igen
+										<input name='3' type='radio' value='Igen' checked>Igen
 									</label>
 								</div>
 								<div class='radio radio-primary'>
 									<label>
-										<input name='3' type='radio' value='0'>Nem
+										<input name='3' type='radio' value='Nem'>Nem
 									</label>
 								</div>
 							</div>
@@ -158,7 +158,7 @@ if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 						<div class='form-group'>
 							<label for='7' class='col-lg-2 control-label'>".$questions[7][0]."</label>
 							<div class='col-lg-4'>
-								<textarea class='form-control' id='7' form='regForm' cols='30' rows='5' maxlength='500' name='7'></textarea>
+								<textarea class='form-control' id='7' form='regForm' cols='30' rows='2' maxlength='500' name='7'></textarea>
 							</div>
 						</div>
 
@@ -175,9 +175,9 @@ if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 									<input name='a[]' type='checkbox' value='Pénzt keresek'> Pénzt keresek
 								</label><br>
 								<label>
-									<input name='a[]' type='checkbox' value='Egyéb'> Egyéb
-									<textarea class='form-control' id='81' form='regForm' cols='57' rows='5' maxlength='50' name='81'></textarea>
-								</label>								
+									<input name='a[]' type='checkbox' value='Egyéb'> Egyéb:
+									<textarea class='form-control' id='81' form='regForm' cols='57' rows='2' maxlength='50' name='81'></textarea>
+								</label>
 							</div>
 						</div>
 
@@ -242,14 +242,14 @@ if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 						<div class='form-group'>
 							<label for='12' class='col-lg-2 control-label'>".$questions[12][0]."</label>
 							<div class='col-lg-4'>
-								<textarea class='form-control' id='12' form='regForm' cols='30' rows='5' maxlength='50' name='12'></textarea>
+								<textarea class='form-control' id='12' form='regForm' cols='30' rows='2' maxlength='50' name='12'></textarea>
 							</div>
 						</div>
 
 						<div class='form-group'>
 							<label for='13' class='col-lg-2 control-label'>Megjegyzés</label>
 							<div class='col-lg-4'>
-								<textarea class='form-control' id='13' form='regForm' cols='30' rows='5' maxlength='50' name='comment'></textarea>
+								<textarea class='form-control' id='13' form='regForm' cols='30' rows='2' maxlength='50' name='comment'></textarea>
 							</div>
 						</div>
 				
@@ -261,6 +261,7 @@ if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 				</form>
 			</div>
 	";
+	exit;
 }
 if (isset($_GET["send"]) AND res($_GET["send"]) == 1 )
 {
@@ -294,7 +295,15 @@ if (isset($_GET["send"]) AND res($_GET["send"]) == 1 )
 	$answer_81 = res($_POST[81]);
 	$comment = '"' . res($_POST["comment"]) . '"';
 	$date = '"' . date("Y-m-d H:i:s") . '"';
-	$answer_8 .= ": ".$answer_81;
+	
+	if ($answer_8 <> "")
+	{
+		$answer_8 .= ": ".$answer_81;
+	}
+	else
+	{
+		$answer_8 = "A fentiek közül egyik sem.";
+	}
 
 	$columns = "";
 	$values = "";
@@ -312,7 +321,7 @@ if (isset($_GET["send"]) AND res($_GET["send"]) == 1 )
 		}
 
 	}
-	$columns .= 'comment, dateofanswer';
+	$columns .= "comment, dateofanswer";
 	$values .= "$comment, $date";
 	// die("INSERT INTO namedanswers ($columns) VALUES ($values)");
 
@@ -328,21 +337,16 @@ if (isset($_GET["send"]) AND res($_GET["send"]) == 1 )
 	}
 	else
 	{
-		die($db->error);
 		echo"
 			<div class='alert alert-danger'>
-				<h3>A válasz mentése közben váratlan hiba lépett fel, kérjük, próbálja meg később. \n 
+				<h3>A válasz mentése közben váratlan hiba lépett fel, kérjük, próbálja meg később. <br>
 				Ha a probléma továbbra is fennáll, kérjük lépjen kapcsolatba az üzemeltetőkkel.</h3>
 			</div>
 		";
 		header("Refresh: 5; url=index.php");
 		exit;
 	}
-
-
-
-
-
+	exit;
 } 
-
+exit;
 ?>

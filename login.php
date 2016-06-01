@@ -1,9 +1,6 @@
 <?php
 
-//no caching
-header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
-header("Pragma: no-cache"); // HTTP 1.0.
-header("Expires: 0"); // Proxies.
+
 
 #region //including the required files
 require_once("include/dbconnect.php");
@@ -75,6 +72,16 @@ if (isset($_POST["username"]))	//if the user tried to log in
 				exit;
 			}
 			$result->free();
+		}
+		else
+		{
+			echo "
+					<div class='alert alert-danger'>
+						<h3>Az adatbáziskapcsolatban váratlan hiba lépett fel.<br> 
+						Kérjük, próbálja meg később, vagy lépjen kapcsolatba az oldal üzemeltetőjével.</h3>
+						<a href='./logout.php' class='btn btn-danger btn-raised'>Vissza</a>
+					</div>
+				";
 		}
 	}
 	else //if the user did not gave a username OR a password
@@ -198,9 +205,7 @@ else	//if the user did not try to log in, the default login form
 			</footer>
 
 		";
+		exit;
 }
 
-
-
-exit;
 ?>
