@@ -70,7 +70,7 @@ if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 								<input id='2' class='form-control' name='2' type='number' max='2100' min='2016' size='4' required='required'>
 							</div>
 						</div>
-					</fieldset>
+					</fieldset><br>
 
 					<fieldset>
 						<legend>Továbbtanulás</legend>
@@ -80,20 +80,20 @@ if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 							<div class='col-lg-4'>
 								<div class='radio radio-primary'>
 									<label>
-										<input name='3' type='radio' value='Igen' checked>Igen
+										<input id='3' name='3' type='radio' value='Igen' onchange='disable1()' checked>Igen
 									</label>
 								</div>
 								<div class='radio radio-primary'>
 									<label>
-										<input name='3' type='radio' value='Nem'>Nem
+										<input name='3' type='radio' value='Nem' onchange='disable1()'>Nem
 									</label>
 								</div>
 							</div>
 						</div>
 
-						<div class='form-group'>
+						<div class='form-group' id='4f'>
 							<label for='4' class='col-lg-2 control-label'>".$questions[4][0]."</label>
-							<div class='col-lg-4'>
+							<div class='col-lg-4' >
 								<select class='form-control' id='4' name='4' require='require'>
 									<option name='4'>Agrár</option>
 									<option name='4'>Bölcsészettudomány</option>
@@ -108,57 +108,56 @@ if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 									<option name='4'>Sporttudomány</option>
 									<option name='4'>Társadalomtudomány</option>
 									<option name='4'>Természettudomány</option>
-									<option name='4'>Nem jelentkeztem</option>
 								</select>
 							</div>
 						</div>
 
-						<div class='form-group'>
+						<div class='form-group' id='5f'>
 							<label class='col-lg-2 control-label'>".$questions[5][0]."</label>
 							<div class='col-lg-4'>
 								<div class='radio radio-primary'>
 									<label>
-										<input name='5' type='radio' value='Budapesten' checked>Budapesten
+										<input id='51' name='5' type='radio' value='Budapesten' checked>Budapesten
 									</label>
 								</div>
 								<div class='radio radio-primary'>
 									<label>
-										<input name='5' type='radio' value='Vidéken'>Vidéken
+										<input id='52' name='5' type='radio' value='Vidéken'>Vidéken
 									</label>
 								</div>
 								<div class='radio radio-primary'>
 									<label>
-										<input name='5' type='radio' value='Külföldön'>Külföldön
+										<input id='53' name='5' type='radio' value='Külföldön'>Külföldön
 									</label>
 								</div>
 							</div>
 						</div>
 
-						<div class='form-group'>
+						<div class='form-group' id='6f'>
 							<label class='col-lg-2 control-label'>".$questions[6][0]."</label>
 							<div class='col-lg-4'>
 								<div class='radio radio-primary'>
 									<label>
-										<input name='6' type='radio' value='Egyetemi képzés' checked>Egyetemi képzés
+										<input id='61' name='6' type='radio' value='Egyetemi képzés' checked>Egyetemi képzés
 									</label>
 								</div>
 								<div class='radio radio-primary'>
 									<label>
-										<input name='6' type='radio' value='Főiskolai képzés'>Főiskolai képzés
+										<input id='62' name='6' type='radio' value='Főiskolai képzés'>Főiskolai képzés
 									</label>
 								</div>
 								<div class='radio radio-primary'>
 									<label>
-										<input name='6' type='radio' value='Felsőfokú szakképzés (OKJ)'>Felsőfokú szakképzés (OKJ)
+										<input id='63' name='6' type='radio' value='Felsőfokú szakképzés (OKJ)'>Felsőfokú szakképzés (OKJ)
 									</label>
 								</div>
 							</div>
 						</div>
 
-						<div class='form-group'>
+						<div class='form-group' id='7f' style='display:none;'>
 							<label for='7' class='col-lg-2 control-label'>".$questions[7][0]."</label>
 							<div class='col-lg-4'>
-								<textarea class='form-control' id='7' form='regForm' cols='30' rows='2' maxlength='500' name='7'></textarea>
+								<textarea class='form-control' id='7' form='regForm' cols='30' rows='2' maxlength='500' name='7' disabled></textarea>
 							</div>
 						</div>
 
@@ -175,8 +174,8 @@ if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 									<input name='a[]' type='checkbox' value='Pénzt keresek'> Pénzt keresek
 								</label><br>
 								<label>
-									<input name='a[]' type='checkbox' value='Egyéb'> Egyéb:
-									<textarea class='form-control' id='81' form='regForm' cols='57' rows='2' maxlength='50' name='81'></textarea>
+									<input id='82' name='a[]' type='checkbox' value='Egyéb' onclick='disable2()'> Egyéb:
+									<textarea class='form-control' id='81' form='regForm' cols='57' rows='2' maxlength='50' name='81' style='display: none;' disabled></textarea>
 								</label>
 							</div>
 						</div>
@@ -201,45 +200,49 @@ if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 								</div>
 							</div>
 						</div>
+					</fieldset><br>
 
+
+					<fieldset>
+						<legend>Külföldi tanulmányok</legend>
 						<div class='form-group'>
 							<label class='col-lg-2 control-label'>".$questions[10][0]."</label>
 							<div class='col-lg-4'>
 								<div class='radio radio-primary'>
 									<label>
-										<input name='10' type='radio' value='1' checked>Igen
+										<input id='10' name='10' type='radio' value='1' onchange='disable3()' checked>Igen
 									</label>
 								</div>
 								<div class='radio radio-primary'>
 									<label>
-										<input name='10' type='radio' value='0'>Nem
+										<input name='10' type='radio' value='0' onchange='disable3()'>Nem
 									</label>
 								</div>
 							</div>
 						</div>
 
-						<div class='form-group'>
+						<div class='form-group' id='11f'>
 							<label class='col-lg-2 control-label'>".$questions[11][0]."</label>
 							<div class='col-lg-4'>
 								<div class='radio radio-primary'>
 									<label>
-										<input name='11' type='radio' value='Fél év' checked>Fél év
+										<input id='111' name='11' type='radio' value='Fél év' checked>Fél év
 									</label>
 								</div>
 								<div class='radio radio-primary'>
 									<label>
-										<input name='11' type='radio' value='Egy év'>Egy év
+										<input id='112' name='11' type='radio' value='Egy év'>Egy év
 									</label>
 								</div>
 								<div class='radio radio-primary'>
 									<label>
-										<input name='11' type='radio' value='Több, mint egy év'>Több, mint egy év
+										<input id='113' name='11' type='radio' value='Több, mint egy év'>Több, mint egy év
 									</label>
 								</div>
 							</div>
 						</div>
 
-						<div class='form-group'>
+						<div class='form-group' id='12f'>
 							<label for='12' class='col-lg-2 control-label'>".$questions[12][0]."</label>
 							<div class='col-lg-4'>
 								<textarea class='form-control' id='12' form='regForm' cols='30' rows='2' maxlength='50' name='12'></textarea>

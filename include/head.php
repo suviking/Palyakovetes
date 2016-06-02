@@ -16,6 +16,7 @@ echo("
 		<script type='text/javascript' src='bootstrap/js/bootstrap.js'></script>
 		<script type='text/javascript' src='bootstrap/material/js/material.js'></script>
 		<script type='text/javascript' src='bootstrap/material/js/ripples.js'></script>
+		<script type='text/javascript' src='js/form.js'></script>
 
 		<link rel='shortcut icon' href='style/favicon.ico' />
 	</head>

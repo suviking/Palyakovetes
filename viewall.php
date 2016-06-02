@@ -50,12 +50,6 @@ if (isset($_GET["all"]))
 			
 		";
 
-	$funtionButtons = "";
-	if ($user["canedit"])
-	{
-		$funtionButtons .= "<a href='' class='btn btn-info'>Szerkesztés</a>";
-	}
-
 
 
 	if (empty($_POST["year"]))
@@ -78,6 +72,27 @@ if (isset($_GET["all"]))
 	{
 		$answers[] = $row;
 	}
+
+	if ($user["canedit"])
+	{
+		$editButt = 1;
+	}
+	else
+	{
+		$editButt = 0;
+	}
+	if ($user["candelete"])
+	{
+		$deleteButt = 1;
+	}
+	else
+	{
+		$deleteButt = 0;
+	}
+
+
+
+
 	if (empty($answers))
 	{
 		echo "<p>Még nincs feltöltött kérdőív.</p>";
@@ -107,10 +122,24 @@ if (isset($_GET["all"]))
 						echo "<td>$value</td>";
 					}
 				}
-				echo "<td align='right' style='width: 300px'>
-						<a href='viewall.php?edit=$id' class='btn btn-info'>Szerkesztés</a>
-						<a href='viewall.php?delete=$id' class='btn btn-danger'>Törlés</a></td>
-					</tr>";
+				echo "<td align='right' style='width: 300px'>";
+						if ($editButt == 1)
+						{
+							echo "<a href='viewall.php?edit=$id' class='btn btn-flat btn-info'>Szerkesztés</a>";
+						}
+						else
+						{
+							echo "<a class'btn btn-flat btn-info' disabled>Szerkesztés</a>";
+						}
+						if ($deleteButt == 1)
+						{
+							echo "<a href='viewall.php?delete=$id' class='btn btn-flat btn-danger'>Törlés</a>";
+						}
+						else
+						{
+							echo "<a class='btn btn-flat btn-danger' disabled>Törlés</a>";
+						}
+					echo "</td></tr>";
 			}
 			echo "</table> </div>";
 	}
