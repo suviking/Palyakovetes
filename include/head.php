@@ -10,6 +10,7 @@ echo("
 		<link rel='stylesheet' href='bootstrap/material/css/ripples.css'>
 		<link rel='stylesheet' href='bootstrap/material/css/roboto.css'>
 		<link rel='stylesheet' href='style/custom_bootstrap.css'>
+		 <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/icon?family=Material+Icons'>
 
 		<script type='text/javascript' src='js/jquery-2.1.4.min.js'></script>
 		<script type='text/javascript' src='js/init.js'></script>

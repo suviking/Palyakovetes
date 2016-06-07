@@ -270,38 +270,56 @@ if (isset($_GET["send"]) AND res($_GET["send"]) == 1 )
 {
 	for ($i = 0; $i < 13; $i++)
 	{
-		if ($i == 8)
+		if (!isset($_POST[$i]))
 		{
-			$answer_8 = "";
-			if (!empty($_POST["a"]))
-			{
-				foreach($_POST["a"] as $check)
-				{
-					$answer_8 .= res($check) . "; ";
-				}
-				$answer_8 = mb_substr($answer_8, 0, -2);
-			}
+			${"answer_$i"} = "";
 		}
 		else
 		{
-			if (${"answer_$i"} = (int)trim(res($_POST[$i]), " \t\n\r\0\x0B")) 
-			{}
+			if ($i == 8)
+			{
+				$answer_8 = "";
+				if (!empty($_POST["a"]))
+				{
+					foreach($_POST["a"] as $check)
+					{
+						$answer_8 .= res($check) . "; ";
+					}
+					$answer_8 = mb_substr($answer_8, 0, -2);
+				}
+			}
 			else
 			{
-				${"answer_$i"} = trim(res($_POST[$i]), " \t\n\r\0\x0B");
+				if (${"answer_$i"} = (int)res($_POST[$i])) 
+				{
+					${"answer_$i"} = (int)res($_POST[$i]);
+				}
+				else
+				{
+					${"answer_$i"} = trim(res($_POST[$i]), " \t\n\r\0\x0B");
+				}
 			}
-
-			
 		}
 	}
 
-	$answer_81 = res($_POST[81]);
+	if (!isset($_POST[81]))
+	{
+		$answer_81 = "";
+	}
+	else
+	{
+		$answer_81 = res($_POST[81]);		
+	}
+
 	$comment = '"' . res($_POST["comment"]) . '"';
 	$date = '"' . date("Y-m-d H:i:s") . '"';
 	
-	if ($answer_8 <> "")
+	if ($answer_8 <> "" AND $answer_81 <> "")
 	{
 		$answer_8 .= ": ".$answer_81;
+	}
+	else if ($answer_8 <> "")
+	{
 	}
 	else
 	{
@@ -326,7 +344,7 @@ if (isset($_GET["send"]) AND res($_GET["send"]) == 1 )
 	}
 	$columns .= "comment, dateofanswer";
 	$values .= "$comment, $date";
-	// die("INSERT INTO namedanswers ($columns) VALUES ($values)");
+
 
 	if ($db->query("INSERT INTO namedanswers ($columns) VALUES ($values)"))
 	{

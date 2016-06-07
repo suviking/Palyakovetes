@@ -101,11 +101,13 @@ if (isset($_GET["all"]))
 	{
 		echo "
 				<table class='table table-striped table-hover '>
-					<th>Név</th>
-					<th>E-mail</th>
-					<th>Végzés éve</th>
-					<th>Továbbtanul?</th>
-					<th></th>
+					<tr class='success'>
+						<th>Név</th>
+						<th>E-mail</th>
+						<th>Végzés éve</th>
+						<th>Továbbtanul?</th>
+						<th></th>
+					</tr>
 			";
 			foreach ($answers as $row) 
 			{
@@ -129,7 +131,7 @@ if (isset($_GET["all"]))
 						}
 						else
 						{
-							echo "<a class'btn btn-flat btn-info' disabled>Szerkesztés</a>";
+							echo "<a class='btn btn-flat btn-info' disabled>Szerkesztés</a>";
 						}
 						if ($deleteButt == 1)
 						{
