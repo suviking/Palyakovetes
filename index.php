@@ -21,6 +21,9 @@ if ($user["type"] == 0) //if the user is an EGYOSZ member, only uploading the pa
 		$userfunctions .= "
 		<li>
 			<a href='sendform.php'>Válasz beküldése</a>
+		</li>
+		<li>
+			<a href='unnamedform.php'>Névtelen értékelés</a>
 		</li>";
 	}
 	if ($user["canview"])
