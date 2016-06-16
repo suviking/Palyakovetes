@@ -157,7 +157,7 @@ if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 						<div class='form-group' id='7f' style='display:none;'>
 							<label for='7' class='col-lg-2 control-label'>".$questions[7][0]."</label>
 							<div class='col-lg-4'>
-								<textarea class='form-control' id='7' form='regForm' cols='30' rows='2' maxlength='500' name='7' disabled></textarea>
+								<textarea class='form-control' id='7' form='regForm' cols='30' rows='2' maxlength='500' name='7' required disabled></textarea>
 							</div>
 						</div>
 
@@ -210,12 +210,12 @@ if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 							<div class='col-lg-4'>
 								<div class='radio radio-primary'>
 									<label>
-										<input id='10' name='10' type='radio' value='1' onchange='disable3()' checked>Igen
+										<input id='10' name='10' type='radio' value='Igen' onchange='disable3()' checked>Igen
 									</label>
 								</div>
 								<div class='radio radio-primary'>
 									<label>
-										<input name='10' type='radio' value='0' onchange='disable3()'>Nem
+										<input name='10' type='radio' value='Nem' onchange='disable3()'>Nem
 									</label>
 								</div>
 							</div>
@@ -245,7 +245,7 @@ if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 						<div class='form-group' id='12f'>
 							<label for='12' class='col-lg-2 control-label'>".$questions[12][0]."</label>
 							<div class='col-lg-4'>
-								<textarea class='form-control' id='12' form='regForm' cols='30' rows='2' maxlength='50' name='12'></textarea>
+								<textarea class='form-control' id='12' form='regForm' cols='30' rows='2' maxlength='50' name='12' required></textarea>
 							</div>
 						</div>
 
@@ -270,15 +270,9 @@ if (isset($_GET["send"]) AND res($_GET["send"]) == 1 )
 {
 	for ($i = 0; $i < 13; $i++)
 	{
-		if (!isset($_POST[$i]))
+		if ($i == 8)
 		{
-			${"answer_$i"} = "";
-		}
-		else
-		{
-			if ($i == 8)
-			{
-				$answer_8 = "";
+			$answer_8 = "";
 				if (!empty($_POST["a"]))
 				{
 					foreach($_POST["a"] as $check)
@@ -287,6 +281,12 @@ if (isset($_GET["send"]) AND res($_GET["send"]) == 1 )
 					}
 					$answer_8 = mb_substr($answer_8, 0, -2);
 				}
+		}
+		else
+		{
+			if (!isset($_POST[$i]))
+			{
+				${"answer_$i"} = "";
 			}
 			else
 			{
@@ -313,17 +313,25 @@ if (isset($_GET["send"]) AND res($_GET["send"]) == 1 )
 
 	$comment = '"' . res($_POST["comment"]) . '"';
 	$date = '"' . date("Y-m-d H:i:s") . '"';
-	
 	if ($answer_8 <> "" AND $answer_81 <> "")
 	{
 		$answer_8 .= ": ".$answer_81;
 	}
-	else if ($answer_8 <> "")
+	else if ($answer_8 <> "" AND $answer_81 == "")
 	{
 	}
-	else
+	if ($answer_8 == "")
 	{
 		$answer_8 = "A fentiek közül egyik sem.";
+	}
+
+	if ($answer_3 == "Igen")
+	{
+		$answer_7 = "";
+	}
+	if ($answer_10 == "Igen")
+	{
+		$answer_12 = "";
 	}
 
 	$columns = "";
