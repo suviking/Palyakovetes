@@ -329,7 +329,7 @@ if (isset($_GET["send"]) AND res($_GET["send"]) == 1 )
 	{
 		$answer_7 = "";
 	}
-	if ($answer_10 == "Igen")
+	if ($answer_10 == "Nem")
 	{
 		$answer_12 = "";
 	}

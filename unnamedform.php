@@ -61,14 +61,14 @@ if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 										<td style='text-align:center;'>
 											<div class='radio radio-primary'>
 												<label>
-													<input name='rating' type='radio' value='1' checked>
+													<input name='rating' type='radio' value='1'>
 												</label>
 											</div>
 										</td>
 										<td style='text-align:center;'>
 											<div class='radio radio-primary'>
 												<label>
-													<input name='rating' type='radio' value='2' checked>
+													<input name='rating' type='radio' value='2'>
 												</label>
 											</div>
 										</td>
@@ -82,14 +82,14 @@ if (!isset($_GET["send"]) OR res($_GET["send"]) <> 1)
 										<td style='text-align:center;'>
 											<div class='radio radio-primary'>
 												<label>
-													<input name='rating' type='radio' value='4' checked>
+													<input name='rating' type='radio' value='4'>
 												</label>
 											</div>
 										</td>
 										<td style='text-align:center;'>
 											<div class='radio radio-primary'>
 												<label>
-													<input name='rating' type='radio' value='5' checked>
+													<input name='rating' type='radio' value='5'>
 												</label>
 											</div>
 										</td>
