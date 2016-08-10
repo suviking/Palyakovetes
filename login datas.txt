@@ -1,0 +1,9 @@
+domain: illyes-bors.tk	-  dot.tk
+	d.suviking@gmail.com
+	Hus.le,ves;98
+webserver: hostinger
+	david.suvegh@gmail.com
+	Hus.le,ves;98
+
+database:
+	psw: rootadmin
